@@ -4,13 +4,14 @@
 
 package com.mycompany.sgbiblioteca;
 
-/**
- *
- * @author Milagros
- */
+import com.mycompany.bd.Conexion;
+import java.sql.Connection;
 public class SGBiblioteca {
 
     public static void main(String[] args) {
+        Conexion c = new Conexion();
+        Connection cn = c.conectar();
+        
         System.out.println("Hello World!");
     }
 }
