@@ -4,7 +4,7 @@
 
 package com.mycompany.sgbiblioteca;
 
-import com.mycompany.bd.Conexion;
+import com.mycompany.db.Conexion;
 import java.sql.Connection;
 public class SGBiblioteca {
 

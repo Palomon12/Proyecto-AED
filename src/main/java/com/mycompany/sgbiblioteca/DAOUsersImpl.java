@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.sgbiblioteca;
 
-import com.mycompany.bd.Conexion;
+import com.mycompany.db.Conexion;
 import com.mycompany.interfaces.DAOUsers;
 import com.mycompany.models.Users;
 import java.sql.PreparedStatement;
@@ -12,10 +8,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Milagros
- */
 public class DAOUsersImpl extends Conexion implements DAOUsers {
 
     @Override
