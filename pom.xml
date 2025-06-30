@@ -22,5 +22,17 @@
             <artifactId>flatlaf</artifactId>
             <version>3.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf-intellij-themes</artifactId>
+            <version>3.5.4</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>io.github.AnLaVN</groupId>
+            <artifactId>AL-Library_EN</artifactId>
+            <version>6.70.10.2</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>
