@@ -41,7 +41,6 @@ public class Lendings extends javax.swing.JPanel {
         libroIdLbl = new javax.swing.JLabel();
         libroIdTxt = new javax.swing.JTextField();
         button = new javax.swing.JButton();
-        image = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -57,19 +56,17 @@ public class Lendings extends javax.swing.JPanel {
 
         libroIdLbl.setText("Libro ID");
 
-        button.setBackground(new java.awt.Color(18, 90, 173));
+        button.setBackground(new java.awt.Color(255, 102, 102));
         button.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         button.setForeground(new java.awt.Color(255, 255, 255));
         button.setText("Prestar");
         button.setBorderPainted(false);
-        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonActionPerformed(evt);
             }
         });
-
-        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/prestamo.gif"))); // NOI18N
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -90,9 +87,6 @@ public class Lendings extends javax.swing.JPanel {
                     .addComponent(libroIdTxt)
                     .addComponent(button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
-            .addGroup(bgLayout.createSequentialGroup()
-                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(193, 193, 193))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +106,6 @@ public class Lendings extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addComponent(button, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110))
-            .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -208,7 +201,6 @@ public class Lendings extends javax.swing.JPanel {
     private javax.swing.JButton button;
     private javax.swing.JLabel folioLbl;
     private javax.swing.JTextField folioTxt;
-    private javax.swing.JLabel image;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel libroIdLbl;
     private javax.swing.JTextField libroIdTxt;
