@@ -9,21 +9,21 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class Books extends javax.swing.JPanel {
-    
+
     public Books() {
         initComponents();
         InitStyles();
         LoadBooks();
     }
     private final Stack<com.mycompany.models.Books> pilaEliminados = new Stack<>();
+
     private void InitStyles() {
         title.putClientProperty("FlatLaf.styleClass", "h1");
         title.setForeground(Color.black);
         bookSearch.putClientProperty("JTextField.placeholderText", "Ingrese el título del libro a buscar.");
     }
-    
+
     private void LoadBooks() {
         try {
             DAOBooks dao = new DAOBooksImpl();
@@ -33,8 +33,7 @@ public class Books extends javax.swing.JPanel {
             System.out.println(e.getMessage());
         }
     }
-   
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -199,12 +198,13 @@ public class Books extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteButton)
-                    .addComponent(editButton)
-                    .addComponent(addButton)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(undoDeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sortBooksButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(deleteButton)
+                        .addComponent(editButton)
+                        .addComponent(addButton)
+                        .addComponent(sortBooksButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(25, 25, 25))
         );
 
@@ -221,7 +221,7 @@ public class Books extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        
+
     }//GEN-LAST:event_jTable1MousePressed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -229,23 +229,23 @@ public class Books extends javax.swing.JPanel {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-    DAOBooks dao = new DAOBooksImpl();
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    if (jTable1.getSelectedRows().length < 1) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar uno o más libros a eliminar.\n", "AVISO", javax.swing.JOptionPane.ERROR_MESSAGE);
-    } else {
-        for (int i : jTable1.getSelectedRows()) {
-            try {
-                int idLibro = (int) jTable1.getValueAt(i, 0);
-                com.mycompany.models.Books libro = dao.getBookById(idLibro);
-                pilaEliminados.push(libro); 
-                dao.eliminar(idLibro);
-                model.removeRow(i);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+        DAOBooks dao = new DAOBooksImpl();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (jTable1.getSelectedRows().length < 1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar uno o más libros a eliminar.\n", "AVISO", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } else {
+            for (int i : jTable1.getSelectedRows()) {
+                try {
+                    int idLibro = (int) jTable1.getValueAt(i, 0);
+                    com.mycompany.models.Books libro = dao.getBookById(idLibro);
+                    pilaEliminados.push(libro);
+                    dao.eliminar(idLibro);
+                    model.removeRow(i);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
-    }  
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -274,78 +274,98 @@ public class Books extends javax.swing.JPanel {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void undoDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoDeleteButtonActionPerformed
-       if (!pilaEliminados.isEmpty()) {
-        DAOBooks dao = new DAOBooksImpl();
-        com.mycompany.models.Books libroRecuperado = pilaEliminados.pop();
-        try {
-            dao.insertar(libroRecuperado);
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.addRow(new Object[]{
-                libroRecuperado.getId(),
-                libroRecuperado.getTitle(),
-                libroRecuperado.getDate(),
-                libroRecuperado.getAuthor(),
-                libroRecuperado.getCategory(),
-                libroRecuperado.getEdit(),
-                libroRecuperado.getLang(),
-                libroRecuperado.getPages(),
-                libroRecuperado.getDescription(),
-                libroRecuperado.getEjemplares(),
-                libroRecuperado.getStock(),
-                libroRecuperado.getAvailable()
-            });
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        if (!pilaEliminados.isEmpty()) {
+            DAOBooks dao = new DAOBooksImpl();
+            com.mycompany.models.Books libroRecuperado = pilaEliminados.pop();
+
+            try {
+                com.mycompany.models.Books nuevoLibro = new com.mycompany.models.Books();
+
+                nuevoLibro.setTitle(libroRecuperado.getTitle());
+                nuevoLibro.setDate(libroRecuperado.getDate());
+                nuevoLibro.setAuthor(libroRecuperado.getAuthor());
+                nuevoLibro.setCategory(libroRecuperado.getCategory());
+                nuevoLibro.setEdit(libroRecuperado.getEdit());
+                nuevoLibro.setLang(libroRecuperado.getLang());
+                nuevoLibro.setPages(libroRecuperado.getPages());
+                nuevoLibro.setDescription(libroRecuperado.getDescription());
+                nuevoLibro.setEjemplares(libroRecuperado.getEjemplares());
+                nuevoLibro.setStock(libroRecuperado.getStock());
+                nuevoLibro.setAvailable(libroRecuperado.getAvailable());
+
+                dao.registrar(nuevoLibro);
+
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.addRow(new Object[]{
+                    "AUTO", 
+                    nuevoLibro.getTitle(),
+                    nuevoLibro.getDate(),
+                    nuevoLibro.getAuthor(),
+                    nuevoLibro.getCategory(),
+                    nuevoLibro.getEdit(),
+                    nuevoLibro.getLang(),
+                    nuevoLibro.getPages(),
+                    nuevoLibro.getDescription(),
+                    nuevoLibro.getEjemplares(),
+                    nuevoLibro.getStock(),
+                    nuevoLibro.getAvailable()
+                });
+            } catch (Exception e) {
+                System.out.println("Error al restaurar libro: " + e.getMessage());
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay libros eliminados para restaurar.");
         }
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "No hay libros eliminados para restaurar.");
-    }
     }//GEN-LAST:event_undoDeleteButtonActionPerformed
 
     private void sortBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortBooksButtonActionPerformed
         try {
-        DAOBooks dao = new DAOBooksImpl();
-        List<com.mycompany.models.Books> lista = dao.listar("");
-        mergeSortBooks(lista, 0, lista.size() - 1);
+            DAOBooks dao = new DAOBooksImpl();
+            List<com.mycompany.models.Books> lista = dao.listar("");
+            mergeSortBooks(lista, 0, lista.size() - 1);
 
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        for (com.mycompany.models.Books u : lista) {
-            model.addRow(new Object[]{
-                u.getId(), u.getTitle(), u.getDate(), u.getAuthor(),
-                u.getCategory(), u.getEdit(), u.getLang(), u.getPages(),
-                u.getDescription(), u.getEjemplares(), u.getStock(), u.getAvailable()
-            });
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            for (com.mycompany.models.Books u : lista) {
+                model.addRow(new Object[]{
+                    u.getId(), u.getTitle(), u.getDate(), u.getAuthor(),
+                    u.getCategory(), u.getEdit(), u.getLang(), u.getPages(),
+                    u.getDescription(), u.getEjemplares(), u.getStock(), u.getAvailable()
+                });
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
-    }
     }//GEN-LAST:event_sortBooksButtonActionPerformed
-private void mergeSortBooks(List<com.mycompany.models.Books> list, int left, int right) {
-    if (left < right) {
-        int middle = (left + right) / 2;
-        mergeSortBooks(list, left, middle);
-        mergeSortBooks(list, middle + 1, right);
-        mergeBooks(list, left, middle, right);
+    private void mergeSortBooks(List<com.mycompany.models.Books> list, int left, int right) {
+        if (left < right) {
+            int middle = (left + right) / 2;
+            mergeSortBooks(list, left, middle);
+            mergeSortBooks(list, middle + 1, right);
+            mergeBooks(list, left, middle, right);
+        }
     }
-}
 
-private void mergeBooks(List<com.mycompany.models.Books> list, int left, int middle, int right) {
-    List<com.mycompany.models.Books> leftList = new ArrayList<>(list.subList(left, middle + 1));
-    List<com.mycompany.models.Books> rightList = new ArrayList<>(list.subList(middle + 1, right + 1));
-    int i = 0, j = 0, k = left;
+    private void mergeBooks(List<com.mycompany.models.Books> list, int left, int middle, int right) {
+        List<com.mycompany.models.Books> leftList = new ArrayList<>(list.subList(left, middle + 1));
+        List<com.mycompany.models.Books> rightList = new ArrayList<>(list.subList(middle + 1, right + 1));
+        int i = 0, j = 0, k = left;
 
-    while (i < leftList.size() && j < rightList.size()) {
-        if (leftList.get(i).getTitle().compareToIgnoreCase(rightList.get(j).getTitle()) <= 0) {
+        while (i < leftList.size() && j < rightList.size()) {
+            if (leftList.get(i).getTitle().compareToIgnoreCase(rightList.get(j).getTitle()) <= 0) {
+                list.set(k++, leftList.get(i++));
+            } else {
+                list.set(k++, rightList.get(j++));
+            }
+        }
+
+        while (i < leftList.size()) {
             list.set(k++, leftList.get(i++));
-        } else {
+        }
+        while (j < rightList.size()) {
             list.set(k++, rightList.get(j++));
         }
     }
-
-    while (i < leftList.size()) list.set(k++, leftList.get(i++));
-    while (j < rightList.size()) list.set(k++, rightList.get(j++));
-}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JPanel bg;
